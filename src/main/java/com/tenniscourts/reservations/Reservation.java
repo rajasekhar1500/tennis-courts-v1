@@ -3,6 +3,10 @@ package com.tenniscourts.reservations;
 import com.tenniscourts.config.persistence.BaseEntity;
 import com.tenniscourts.guests.Guest;
 import com.tenniscourts.schedules.Schedule;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -10,11 +14,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
+import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 import java.math.BigDecimal;
 
 
@@ -25,8 +28,13 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-@Builder
-public class Reservation extends BaseEntity<Long> {
+@Builder(toBuilder = true)
+public class Reservation extends BaseEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
 
     @OneToOne
     private Guest guest;
@@ -36,10 +44,10 @@ public class Reservation extends BaseEntity<Long> {
     private Schedule schedule;
 
     @NotNull
-    private BigDecimal value;
+    private BigDecimal prince;
 
     @NotNull
-    private ReservationStatus reservationStatus = ReservationStatus.READY_TO_PLAY;
+    private ReservationStatusEnum reservationStatus = ReservationStatusEnum.READY_TO_PLAY;
 
     private BigDecimal refundValue;
 }

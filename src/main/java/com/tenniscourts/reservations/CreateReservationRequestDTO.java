@@ -1,13 +1,14 @@
 package com.tenniscourts.reservations;
 
+import jakarta.annotation.Nonnull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
 import lombok.Setter;
 
-import javax.validation.constraints.NotNull;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -17,10 +18,10 @@ import javax.validation.constraints.NotNull;
 @Data
 public class CreateReservationRequestDTO {
 
-    @NotNull
+    @Nonnull
     private Long guestId;
 
-    @NotNull
+    @Nonnull
     private Long scheduleId;
 
 }

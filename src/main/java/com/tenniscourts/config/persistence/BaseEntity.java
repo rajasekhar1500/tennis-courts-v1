@@ -1,31 +1,26 @@
 package com.tenniscourts.config.persistence;
 
 import com.tenniscourts.audit.CustomAuditEntityListener;
-import lombok.EqualsAndHashCode;
+import jakarta.persistence.Column;
+import jakarta.persistence.EntityListeners;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.MappedSuperclass;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
-import javax.persistence.Column;
-import javax.persistence.EntityListeners;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-@MappedSuperclass
 @Getter
 @Setter
-@EqualsAndHashCode
+@MappedSuperclass
 @EntityListeners(CustomAuditEntityListener.class)
-public class BaseEntity<ID> implements Serializable {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private ID id;
+public class BaseEntity implements Serializable {
 
     @Column
     private String ipNumberUpdate;
