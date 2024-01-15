@@ -51,15 +51,14 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
         return new ResponseEntity<>(errorDetails, BAD_REQUEST);
     }
 
-    @Override
-    protected ResponseEntity<Object> handleMissingServletRequestParameter(
+        protected ResponseEntity<Object> handleMissingServletRequestParameter(
             MissingServletRequestParameterException ex, HttpHeaders headers,
             HttpStatus status, WebRequest request) {
         String error = ex.getParameterName() + " parameter is missing";
         return buildResponseEntity(new ErrorDetails(LocalDateTime.now(), error, ex.getLocalizedMessage()), BAD_REQUEST);
     }
 
-    @Override
+
     protected ResponseEntity<Object> handleHttpMediaTypeNotSupported(
             HttpMediaTypeNotSupportedException ex,
             HttpHeaders headers,
@@ -72,9 +71,9 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
         return buildResponseEntity(new ErrorDetails(LocalDateTime.now(), builder.substring(0, builder.length() - 2), ex.getLocalizedMessage()), UNSUPPORTED_MEDIA_TYPE);
     }
 
-    @ExceptionHandler(javax.validation.ConstraintViolationException.class)
+    @ExceptionHandler(jakarta.validation.ConstraintViolationException.class)
     public ResponseEntity<Object> handleConstraintViolation(
-            javax.validation.ConstraintViolationException ex) {
+            jakarta.validation.ConstraintViolationException ex) {
         ErrorDetails errorDetails = new ErrorDetails(LocalDateTime.now(),
                 "Constraint violation",
                 ex.getConstraintViolations()

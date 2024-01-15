@@ -36,23 +36,23 @@ public class ReservationService {
             this.validateCancellation(reservation);
 
             BigDecimal refundValue = getRefundValue(reservation);
-            return this.updateReservation(reservation, refundValue, ReservationStatus.CANCELLED);
+            return this.updateReservation(reservation, refundValue, ReservationStatusEnum.CANCELLED);
 
         }).orElseThrow(() -> {
             throw new EntityNotFoundException("Reservation not found.");
         });
     }
 
-    private Reservation updateReservation(Reservation reservation, BigDecimal refundValue, ReservationStatus status) {
+    private Reservation updateReservation(Reservation reservation, BigDecimal refundValue, ReservationStatusEnum status) {
         reservation.setReservationStatus(status);
-        reservation.setValue(reservation.getValue().subtract(refundValue));
+        reservation.setPrince(reservation.getPrince().subtract(refundValue));
         reservation.setRefundValue(refundValue);
 
         return reservationRepository.save(reservation);
     }
 
     private void validateCancellation(Reservation reservation) {
-        if (!ReservationStatus.READY_TO_PLAY.equals(reservation.getReservationStatus())) {
+        if (!ReservationStatusEnum.READY_TO_PLAY.equals(reservation.getReservationStatus())) {
             throw new IllegalArgumentException("Cannot cancel/reschedule because it's not in ready to play status.");
         }
 
@@ -65,7 +65,7 @@ public class ReservationService {
         long hours = ChronoUnit.HOURS.between(LocalDateTime.now(), reservation.getSchedule().getStartDateTime());
 
         if (hours >= 24) {
-            return reservation.getValue();
+            return reservation.getPrince();
         }
 
         return BigDecimal.ZERO;
@@ -80,7 +80,7 @@ public class ReservationService {
             throw new IllegalArgumentException("Cannot reschedule to the same slot.");
         }
 
-        previousReservation.setReservationStatus(ReservationStatus.RESCHEDULED);
+        previousReservation.setReservationStatus(ReservationStatusEnum.RESCHEDULED);
         reservationRepository.save(previousReservation);
 
         ReservationDTO newReservation = bookReservation(CreateReservationRequestDTO.builder()

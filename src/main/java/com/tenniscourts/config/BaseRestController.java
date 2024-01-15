@@ -1,14 +1,14 @@
 package com.tenniscourts.config;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import springfox.documentation.annotations.ApiIgnore;
 
 import java.net.URI;
 
-@ApiIgnore
-public class BaseRestController {
 
-  protected URI locationByEntity(Long entityId){
+public class BaseRestController {
+    @Hidden
+    protected URI locationByEntity(Long entityId) {
         return ServletUriComponentsBuilder.fromCurrentRequest().path(
                 "/{id}").buildAndExpand(entityId).toUri();
     }
