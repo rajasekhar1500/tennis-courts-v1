@@ -10,6 +10,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Getter
@@ -24,6 +25,9 @@ public class TennisCourtDTO {
 
     @NotNull
     private String name;
+
+    @NotNull
+    private BigDecimal prince;
 
     private List<ScheduleDTO> tennisCourtSchedules;
 

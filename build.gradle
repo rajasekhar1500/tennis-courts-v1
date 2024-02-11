@@ -47,5 +47,6 @@ dependencies {
     annotationProcessor "org.mapstruct:mapstruct-processor:1.5.3.Final"
 
     testImplementation "junit:junit:4.13.1"
+    implementation 'io.springfox:springfox-swagger2:3.0.0'
 
 }

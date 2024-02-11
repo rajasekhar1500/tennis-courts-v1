@@ -5,6 +5,8 @@ import com.tenniscourts.schedules.ScheduleService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+
 @Service
 @AllArgsConstructor
 public class TennisCourtService {
@@ -16,13 +18,16 @@ public class TennisCourtService {
     private final TennisCourtMapper tennisCourtMapper;
 
     public TennisCourtDTO addTennisCourt(TennisCourtDTO tennisCourt) {
+        tennisCourt.setPrince(BigDecimal.ONE);
         return tennisCourtMapper.map(tennisCourtRepository.saveAndFlush(tennisCourtMapper.map(tennisCourt)));
     }
 
-    public TennisCourtDTO findTennisCourtById(Long id) {
-        return tennisCourtRepository.findById(id).map(tennisCourtMapper::map).orElseThrow(() -> {
-            throw new EntityNotFoundException("Tennis Court not found.");
-        });
+    public TennisCourtDTO findTennisCourtById(Long tennisCourtId) {
+        TennisCourt tennisCourt = tennisCourtRepository.findById(tennisCourtId)
+                .orElseThrow(() -> new EntityNotFoundException("Tennis Court not found with guestId: " + tennisCourtId));
+
+        TennisCourtDTO tennisCourtDTO = tennisCourtMapper.map(tennisCourt);
+        return tennisCourtDTO;
     }
 
     public TennisCourtDTO findTennisCourtWithSchedulesById(Long tennisCourtId) {

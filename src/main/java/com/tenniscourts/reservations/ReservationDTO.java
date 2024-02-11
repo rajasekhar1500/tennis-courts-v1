@@ -36,4 +36,6 @@ public class ReservationDTO {
 
     @NotNull
     private Long guestId;
+
+    private BigDecimal depositAmount;
 }

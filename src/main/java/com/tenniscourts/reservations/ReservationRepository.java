@@ -1,16 +1,13 @@
 package com.tenniscourts.reservations;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.tenniscourts.schedules.Schedule;
 import org.springframework.data.repository.CrudRepository;
-
-import java.time.LocalDateTime;
-import java.util.List;
 
 public interface ReservationRepository extends CrudRepository<Reservation, Long> {
 
-    List<Reservation> findBySchedule_Id(Long scheduleId);
+    int countByScheduleAndReservationStatus(Schedule schedule, ReservationStatusEnum reservationStatusEnum);
 
-    List<Reservation> findByReservationStatusAndSchedule_StartDateTimeGreaterThanEqualAndSchedule_EndDateTimeLessThanEqual(ReservationStatusEnum reservationStatus, LocalDateTime startDateTime, LocalDateTime endDateTime);
+    boolean existsByGuestIdAndReservationStatus(Long guestId, ReservationStatusEnum reservationStatusEnum);
 
-//    List<Reservation> findByStartDateTimeGreaterThanEqualAndEndDateTimeLessThanEqualAndTennisCourt(LocalDateTime startDateTime, LocalDateTime endDateTime, TennisCourt tennisCourt);
+    boolean existsBySchedule_TennisCourt_IdAndReservationStatus(Schedule tennisCourtId, ReservationStatusEnum reservationStatus);
 }

@@ -50,4 +50,10 @@ public class Reservation extends BaseEntity {
     private ReservationStatusEnum reservationStatus = ReservationStatusEnum.READY_TO_PLAY;
 
     private BigDecimal refundValue;
+
+    private boolean depositPaid;
+
+    private boolean depositRefunded;
+
+    private BigDecimal depositAmount;
 }
